@@ -35,6 +35,7 @@ class Bench_Impl( Bench_Interface ):
         super().__init__()
 
         self.artefact = dict()
+        self.ValueList = list()
 
     def TimeLog( self, inName, inCallable ):
         Time = time()
@@ -43,6 +44,9 @@ class Bench_Impl( Bench_Interface ):
         self.AddArtefact( inName, Time )
 
     def Run( self ):
+        if(not self.ValueList):
+            self.ValueList.append(0)
+
         for val in self.ValueList:
             self.ScalableValue = val
 
