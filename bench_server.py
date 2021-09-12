@@ -8,6 +8,7 @@
 from bench import Bench_Impl
 
 # SEREVER-Modules
+import postgresql
 import valentina
 
 
@@ -42,6 +43,25 @@ class BenchServer_Valentina( BenchServer_Impl ):
     def EngineShutdown( self ):
         self.cursor.close()
         self.connection.close()
+
+
+# **********************************************************************************************
+class BenchServer_PostgreSql( BenchServer_Impl ):
+    def __init__(self, inServerAddres):
+        super().__init__()
+        self.ServerAddr = inServerAddres
+
+    def EngineInit(self):
+        self.db = postgresql.open(self.ServerAddr)
+
+    def EngineShutdown( self ):
+        pass
+
+
+# **********************************************************************************************
+class BenchServer_Redis( BenchServer_Impl ):
+    def __init__(self):
+        super().__init__()
 
 
 # **********************************************************************************************
