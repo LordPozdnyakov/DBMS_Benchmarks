@@ -9,6 +9,7 @@ from random import randint
 from bench import Bench_Impl
 from bench_server import BenchServer_Valentina
 from bench_server import BenchServer_PostgreSql
+from bench_server import BenchServer_Redis
 
 
 # **********************************************************************************************
@@ -84,6 +85,34 @@ Bench_Psql_Example.cmd_Insert = 'INSERT INTO T1 VALUES ($1);'
 
 
 # **********************************************************************************************
+class Bench_Redis_Example( BenchServer_Redis ):
+    def __init__(self, inServerAddres):
+        super().__init__(inServerAddres)
+    
+    def SetUp(self):
+        self.AddArtefact('Insert Count', self.ScalableValue)
+
+    def TearDown(self):
+        keys = self.db.keys()
+        for key in keys:
+            self.db.delete(key)
+
+    def StoreKeys(self):
+        for i in range(0, self.ScalableValue):
+            self.db.set( "key_"+str(i), i )
+
+    def ReadKeys(self):
+        for i in range(0, self.ScalableValue):
+            val = self.db.get( "key_"+str(i) )
+            val = int(val)
+
+    def BenchBody(self):
+        self.TimeLog( 'Store', self.StoreKeys )
+        self.AddArtefact('Keys Count', len(self.db.keys()))
+        self.TimeLog( 'Read', self.ReadKeys )
+
+
+# **********************************************************************************************
 def main():
     ##########
     # Simple bench
@@ -107,6 +136,14 @@ def main():
     PS_bench = Bench_Psql_Example(PS_Server_Addr)
     PS_bench.put_Scalable( PS_Server_Axe )
     # PS_bench.Run()
+
+    ##########
+    # Redis bench
+    Redis_Server_Addr = 'localhost:6379:0'
+    Redis_Server_Axe = [10, 100, 1000, 10000, 100000]
+    Redis_bench = Bench_Redis_Example(Redis_Server_Addr)
+    Redis_bench.put_Scalable( Redis_Server_Axe )
+    # Redis_bench.Run()
 
 
 # **********************************************************************************************

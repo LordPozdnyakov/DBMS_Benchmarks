@@ -10,6 +10,7 @@ from bench import Bench_Impl
 # SEREVER-Modules
 import postgresql
 import valentina
+from redis import Redis
 
 
 # **********************************************************************************************
@@ -60,8 +61,16 @@ class BenchServer_PostgreSql( BenchServer_Impl ):
 
 # **********************************************************************************************
 class BenchServer_Redis( BenchServer_Impl ):
-    def __init__(self):
+    def __init__(self, inServerAddres):
         super().__init__()
+        self.ServerAddr = inServerAddres
+    
+    def EngineInit(self):
+        adr = self.ServerAddr.split(':')
+        self.db = Redis(adr[0], adr[1], adr[2])
+
+    def EngineShutdown( self ):
+        self.db.close()
 
 
 # **********************************************************************************************
