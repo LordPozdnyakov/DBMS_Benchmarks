@@ -8,9 +8,6 @@ from time import time
 
 # **********************************************************************************************
 class Bench_Interface:
-    def hello( self ):
-        pass
-
     def Run( self ):
         pass
     def SetUp( self ):
@@ -25,42 +22,52 @@ class Bench_Interface:
     def PrintArtefacts( self ):
         pass
 
+    def TimeLog( self, inName, inCallable ):
+        pass
+
+    def put_Scalable( self, inValueList ):
+        pass
+
 
 # **********************************************************************************************
 class Bench_Impl( Bench_Interface ):
     def __init__(self):
         super().__init__()
 
-        self.arttfact = dict()
+        self.artefact = dict()
+
+    def TimeLog( self, inName, inCallable ):
+        Time = time()
+        inCallable()
+        Time = time() - Time
+        self.AddArtefact( inName, Time )
 
     def Run( self ):
-        self.art_type = 'Before:\t'
-        SetTime = time()
-        self.SetUp()
-        SetTime = time() - SetTime
-        self.AddArtefact( 'SetUp', SetTime )
+        for val in self.ValueList:
+            self.ScalableValue = val
 
-        self.art_type = 'Inner:\t'
-        BenchTime = time()
-        self.BenchBody()
-        BenchTime = time() - BenchTime
-        self.AddArtefact( 'BenchTime', BenchTime )
+            self.art_type = 'Before:'
+            self.TimeLog( 'SetUp', self.SetUp )
 
-        self.art_type = 'After:\t'
-        TearTime = time()
-        self.TearDown()
-        TearTime = time() - TearTime
-        self.AddArtefact( 'TearDown', TearTime )
+            self.art_type = 'Inner:'
+            self.TimeLog( 'BenchTime', self.BenchBody )
 
-        self.PrintArtefacts()
+            self.art_type = 'After:'
+            self.TimeLog( 'TearDown', self.TearDown )
+
+            self.PrintArtefacts()
+            print()
     
     def AddArtefact( self, inName, inValue ):
-        self.arttfact[self.art_type+inName] = inValue
+        self.artefact[self.art_type.ljust(8)+inName] = inValue # TODO: Make it beautiful
 
     def PrintArtefacts( self ):
-        artefacts = [ (key, self.arttfact[key]) for key in self.arttfact ]
+        artefacts = [ (key, self.artefact[key]) for key in self.artefact ]
         for key, val in artefacts:
-            print( 'Artefact:', key, '\t:', val )
+            print( 'Artefact:', key.ljust(20), val )
+
+    def put_Scalable( self, inValueList ):
+        self.ValueList = inValueList
 
 
 # **********************************************************************************************
