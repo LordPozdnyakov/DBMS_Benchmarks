@@ -5,6 +5,9 @@
 #BOX-Modules
 from time import time
 
+#BOX-Modules
+from BenchRange import RangeForward
+
 
 # **********************************************************************************************
 class Bench_Interface:
@@ -36,6 +39,7 @@ class BenchImpl( Bench_Interface ):
 
         self.artefact = dict()
         self.ValueList = list()
+        self.Range = RangeForward
 
     def TimeLog( self, inName, inCallable ):
         Time = time()
@@ -72,6 +76,9 @@ class BenchImpl( Bench_Interface ):
 
     def put_Scalable( self, inValueList ):
         self.ValueList = inValueList
+    
+    def put_Range( self, inBenchRange ):
+        self.Range = inBenchRange
 
 
 # **********************************************************************************************

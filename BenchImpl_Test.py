@@ -20,7 +20,7 @@ class Bench_Example( BenchImpl ):
         arr_size = self.ScalableValue
         self.AddArtefact('arr.size()', arr_size)
 
-        for i in range(0, arr_size):
+        for i in self.Range(0, arr_size):
             x = randint(0, 1000)
             self.arr.append( x*x*x )
 
@@ -38,7 +38,7 @@ def main():
     bench_axe = [1000, 10000, 100000]
     bench = Bench_Example()
     bench.put_Scalable( bench_axe )
-    # bench.Run()
+    bench.Run()
 
 
 # **********************************************************************************************
