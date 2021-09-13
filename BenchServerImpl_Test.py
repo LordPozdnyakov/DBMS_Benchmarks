@@ -3,35 +3,11 @@
 
 # **********************************************************************************************
 # BOX-Modules
-from random import randint
 
 # BENCH-Modules
-from bench import Bench_Impl
-from bench_server import BenchServer_Valentina
-from bench_server import BenchServer_PostgreSql
-from bench_server import BenchServer_Redis
-
-
-# **********************************************************************************************
-class Bench_Example( Bench_Impl ):
-    def __init__(self):
-        super().__init__()
-
-        self.arr = list()
-    
-    def SetUp( self ):
-        arr_size = self.ScalableValue
-        self.AddArtefact('arr.size()', arr_size)
-
-        for i in range(0, arr_size):
-            x = randint(0, 1000)
-            self.arr.append( x*x*x )
-
-    def TearDown( self ):
-        self.arr.clear()
-
-    def BenchBody( self ):
-        sorted(self.arr)
+from BenchServerImpl import BenchServer_Valentina
+from BenchServerImpl import BenchServer_PostgreSql
+from BenchServerImpl import BenchServer_Redis
 
 
 # **********************************************************************************************
@@ -151,13 +127,6 @@ Bench_Valentina_KV_Example.cmd_Delete = 'KEYVALUE KV1 GET(:1);'
 
 # **********************************************************************************************
 def main():
-    ##########
-    # Simple bench
-    bench_axe = [1000, 10000, 100000]
-    bench = Bench_Example()
-    bench.put_Scalable( bench_axe )
-    # bench.Run()
-
     ##########
     # Valentina bench
     VS_Server_Addr = 'sa:sa@127.0.0.1/vdb_test_db'

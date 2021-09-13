@@ -30,7 +30,7 @@ class Bench_Interface:
 
 
 # **********************************************************************************************
-class Bench_Impl( Bench_Interface ):
+class BenchImpl( Bench_Interface ):
     def __init__(self):
         super().__init__()
 

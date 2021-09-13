@@ -5,7 +5,7 @@
 # BOX-Modules
 
 # BENCH-Modules
-from bench import Bench_Impl
+from BenchImpl import BenchImpl
 
 # SEREVER-Modules
 import postgresql
@@ -14,7 +14,7 @@ from redis import Redis
 
 
 # **********************************************************************************************
-class BenchServer_Impl( Bench_Impl ):
+class BenchServerImpl( BenchImpl ):
     def __init__(self):
         super().__init__()
     
@@ -26,13 +26,13 @@ class BenchServer_Impl( Bench_Impl ):
     def Run( self ):
         self.EngineInit()
 
-        Bench_Impl.Run(self)
+        BenchImpl.Run(self)
 
         self.EngineShutdown()
 
 
 # **********************************************************************************************
-class BenchServer_Valentina( BenchServer_Impl ):
+class BenchServer_Valentina( BenchServerImpl ):
     def __init__(self, inServerAddres):
         super().__init__()
         self.ServerAddr = inServerAddres
@@ -47,7 +47,7 @@ class BenchServer_Valentina( BenchServer_Impl ):
 
 
 # **********************************************************************************************
-class BenchServer_PostgreSql( BenchServer_Impl ):
+class BenchServer_PostgreSql( BenchServerImpl ):
     def __init__(self, inServerAddres):
         super().__init__()
         self.ServerAddr = inServerAddres
@@ -60,7 +60,7 @@ class BenchServer_PostgreSql( BenchServer_Impl ):
 
 
 # **********************************************************************************************
-class BenchServer_Redis( BenchServer_Impl ):
+class BenchServer_Redis( BenchServerImpl ):
     def __init__(self, inServerAddres):
         super().__init__()
         self.ServerAddr = inServerAddres
