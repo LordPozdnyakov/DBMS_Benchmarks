@@ -113,6 +113,43 @@ class Bench_Redis_Example( BenchServer_Redis ):
 
 
 # **********************************************************************************************
+class Bench_Valentina_KV_Example( BenchServer_Valentina ):
+    def __init__(self, inServerAddres):
+        super().__init__(inServerAddres)
+    
+    def SetUp(self):
+        self.AddArtefact('Keys Count', self.ScalableValue)
+
+        self.cursor.execute(self.cmd_CreateTable)
+
+    def TearDown(self):
+        for i in range(0, self.ScalableValue):
+            self.cursor.execute(self.cmd_Delete, ["key_"+str(i)] )
+        self.cursor.execute(self.cmd_DropTable)
+
+    def StoreKeys(self):
+        for i in range(0, self.ScalableValue):
+            self.cursor.execute(self.cmd_Insert, ["key_"+str(i), i] )
+
+    def ReadKeys(self):
+        for i in range(0, self.ScalableValue):
+            self.cursor.execute(self.cmd_Get, ["key_"+str(i)] )
+            val = self.cursor.fetchone()
+            val = val[1]
+
+    def BenchBody(self):
+        self.TimeLog( 'Store', self.StoreKeys )
+        # self.AddArtefact('Keys Count', len(self.db.keys()))
+        self.TimeLog( 'Read', self.ReadKeys )
+
+Bench_Valentina_KV_Example.cmd_CreateTable = 'CREATE KEYVALUE KV1;'
+Bench_Valentina_KV_Example.cmd_DropTable = 'DROP KEYVALUE KV1;'
+Bench_Valentina_KV_Example.cmd_Insert = 'KEYVALUE KV1 INSERT(:1 : :2);'
+Bench_Valentina_KV_Example.cmd_Get = 'KEYVALUE KV1 GET(:1);'
+Bench_Valentina_KV_Example.cmd_Delete = 'KEYVALUE KV1 GET(:1);'
+
+
+# **********************************************************************************************
 def main():
     ##########
     # Simple bench
@@ -144,6 +181,15 @@ def main():
     Redis_bench = Bench_Redis_Example(Redis_Server_Addr)
     Redis_bench.put_Scalable( Redis_Server_Axe )
     # Redis_bench.Run()
+
+    ##########
+    # Valentina bench
+    VS_Server_Addr = 'sa:sa@127.0.0.1/vdb_test_db'
+    VS_Server_Axe = [10, 100, 1000, 10000, 100000]
+    # VS_Server_Axe = [10, 100, 1000, 10000]
+    VS_bench = Bench_Valentina_KV_Example(VS_Server_Addr)
+    VS_bench.put_Scalable( VS_Server_Axe )
+    # VS_bench.Run()
 
 
 # **********************************************************************************************
