@@ -10,7 +10,7 @@ from BenchRange import RangeForward, RangeBackward, RangeRandom
 
 
 # **********************************************************************************************
-class Bench_Redis_Example( BenchServer_Redis ):
+class Bench_Redis_Keys_CRUD( BenchServer_Redis ):
     def __init__(self, inServerAddres):
         super().__init__(inServerAddres)
     
@@ -57,7 +57,7 @@ def main():
     Redis_Server_Addr = 'localhost:6379:0'
     # Redis_Server_Axe = [10, 100, 1000, 10000, 100000]
     Redis_Server_Axe = [100000]
-    Redis_bench = Bench_Redis_Example(Redis_Server_Addr)
+    Redis_bench = Bench_Redis_Keys_CRUD(Redis_Server_Addr)
     Redis_bench.put_Scalable( Redis_Server_Axe )
 
     # Forward
