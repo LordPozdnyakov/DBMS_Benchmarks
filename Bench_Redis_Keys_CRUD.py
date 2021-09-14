@@ -40,11 +40,17 @@ class Bench_Redis_Keys_CRUD( BenchServer_Redis ):
             self.db.delete( self.key(i) )
 
     def BenchBody(self):
+        # db_backup = self.db
+        # self.db = self.db.pipeline()
+
         self.TimeLog( 'Store', self.StoreKeys )
         self.AddArtefact('Keys Count', len(self.db.keys()))
         self.TimeLog( 'Read', self.ReadKeys )
         self.TimeLog( 'Update', self.UpdateKeys )
         self.TimeLog( 'Drop', self.DropKeys )
+
+        # self.TimeLog('pipe', self.db.execute)
+        # self.db = db_backup
     
     def key(self, i):
         return "key_" + str(i)
@@ -56,7 +62,7 @@ def main():
     # Redis bench
     Redis_Server_Addr = 'localhost:6379:0'
     # Redis_Server_Axe = [10, 100, 1000, 10000, 100000]
-    Redis_Server_Axe = [100000]
+    Redis_Server_Axe = [10000]
     Redis_bench = Bench_Redis_Keys_CRUD(Redis_Server_Addr)
     Redis_bench.put_Scalable( Redis_Server_Axe )
 
@@ -66,11 +72,11 @@ def main():
     # Backward
 
     Redis_bench.put_Range(RangeBackward)
-    Redis_bench.Run()
+    # Redis_bench.Run()
     
     # Random
     Redis_bench.put_Range(RangeRandom)
-    Redis_bench.Run()
+    # Redis_bench.Run()
 
 
 # **********************************************************************************************
