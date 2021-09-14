@@ -15,7 +15,7 @@ class Bench_Valentina_Record_CRUD( BenchServer_Valentina ):
         super().__init__(inServerAddres)
     
     def SetUp(self):
-        self.AddArtefact('Insert Count', self.ScalableValue)
+        self.AddArtefact('Record Count', self.ScalableValue)
 
         self.cursor.execute('DROP TABLE IF EXISTS T1')
         self.cursor.execute(self.cmd_CreateTable)
@@ -60,7 +60,7 @@ def main():
     # Valentina bench
     VS_Server_Addr = 'sa:sa@127.0.0.1/vdb_test_db'
     # VS_Server_Axe = [10, 100, 1000, 10000, 100000]
-    VS_Server_Axe = [10000]
+    VS_Server_Axe = [100000]
     VS_Bench = Bench_Valentina_Record_CRUD(VS_Server_Addr)
     # VS_Bench.put_BenchName('VS_Record_CRUD') # optional
     VS_Bench.put_Scalable( VS_Server_Axe )
@@ -71,11 +71,11 @@ def main():
     
     # Backward
     VS_Bench.put_Range(RangeBackward)
-    VS_Bench.Run()
+    # VS_Bench.Run()
     
     # Random
     VS_Bench.put_Range(RangeRandom)
-    VS_Bench.Run()
+    # VS_Bench.Run()
 
 
 # **********************************************************************************************

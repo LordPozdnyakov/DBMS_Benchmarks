@@ -54,7 +54,6 @@ class Bench_Psql_Example( BenchServer_PostgreSql ):
 
     def BenchBody(self):
         self.TimeLog( 'Insert', self.InsertRecords )
-        # self.AddArtefact('Keys Count', len(self.db.keys()))
         self.TimeLog( 'Select', self.SelectRecords )
         self.TimeLog( 'Update', self.UpdateRecords )
         self.TimeLog( 'Drop', self.DropRecords )
@@ -86,11 +85,11 @@ def main():
     
     # Backward
     PS_bench.put_Range(RangeBackward)
-    PS_bench.Run()
+    # PS_bench.Run()
     
     # Random
     PS_bench.put_Range(RangeRandom)
-    PS_bench.Run()
+    # PS_bench.Run()
 
 
 # **********************************************************************************************
