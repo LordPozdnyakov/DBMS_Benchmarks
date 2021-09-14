@@ -10,7 +10,7 @@ from BenchRange import RangeForward, RangeBackward, RangeRandom
 
 
 # **********************************************************************************************
-class Bench_Valentina_KV_Example( BenchServer_Valentina ):
+class Bench_Valentina_KV_CRUD( BenchServer_Valentina ):
     def __init__(self, inServerAddres):
         super().__init__(inServerAddres)
     
@@ -42,7 +42,6 @@ class Bench_Valentina_KV_Example( BenchServer_Valentina ):
 
     def BenchBody(self):
         self.TimeLog( 'Store', self.StoreKeys )
-        # self.AddArtefact('Keys Count', len(self.db.keys()))
         self.TimeLog( 'Read', self.ReadKeys )
         self.TimeLog( 'Update', self.UpdateKeys )
         self.TimeLog( 'Drop', self.DropKeys )
@@ -50,12 +49,12 @@ class Bench_Valentina_KV_Example( BenchServer_Valentina ):
     def key(self, i):
         return "key_" + str(i)
 
-Bench_Valentina_KV_Example.cmd_CreateTable = 'CREATE KEYVALUE KV1;'
-Bench_Valentina_KV_Example.cmd_DropTable = 'DROP KEYVALUE KV1;'
-Bench_Valentina_KV_Example.cmd_Insert = 'KEYVALUE KV1 INSERT(:1 : :2);'
-Bench_Valentina_KV_Example.cmd_Get = 'KEYVALUE KV1 GET(:1);'
-Bench_Valentina_KV_Example.cmd_Update = 'KEYVALUE KV1 UPDATE(:1 : :2);'
-Bench_Valentina_KV_Example.cmd_Delete = 'KEYVALUE KV1 GET(:1);'
+Bench_Valentina_KV_CRUD.cmd_CreateTable = 'CREATE KEYVALUE KV1;'
+Bench_Valentina_KV_CRUD.cmd_DropTable = 'DROP KEYVALUE KV1;'
+Bench_Valentina_KV_CRUD.cmd_Insert = 'KEYVALUE KV1 INSERT(:1 : :2);'
+Bench_Valentina_KV_CRUD.cmd_Get = 'KEYVALUE KV1 GET(:1);'
+Bench_Valentina_KV_CRUD.cmd_Update = 'KEYVALUE KV1 UPDATE(:1 : :2);'
+Bench_Valentina_KV_CRUD.cmd_Delete = 'KEYVALUE KV1 GET(:1);'
 
 
 
@@ -66,7 +65,7 @@ def main():
     VS_Server_Addr = 'sa:sa@127.0.0.1/vdb_test_db'
     # VS_Server_Axe = [10, 100, 1000, 10000, 100000]
     VS_Server_Axe = [10000]
-    VS_bench_KV = Bench_Valentina_KV_Example(VS_Server_Addr)
+    VS_bench_KV = Bench_Valentina_KV_CRUD(VS_Server_Addr)
     VS_bench_KV.put_Scalable( VS_Server_Axe )
     
     # Forward
@@ -75,11 +74,11 @@ def main():
     
     # Backward
     VS_bench_KV.put_Range(RangeBackward)
-    # VS_bench_KV.Run()
+    VS_bench_KV.Run()
     
     # Random
     VS_bench_KV.put_Range(RangeRandom)
-    # VS_bench_KV.Run()
+    VS_bench_KV.Run()
 
 
 # **********************************************************************************************

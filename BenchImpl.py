@@ -20,9 +20,13 @@ class Bench_Interface:
     def BenchBody( self ):
         pass
 
+    def AddSystemArtefacts(self):
+        pass
     def AddArtefact( self, inName, inValue ):
         pass
     def PrintArtefacts( self ):
+        pass
+    def put_BenchName( self, inBenchName ):
         pass
 
     def TimeLog( self, inName, inCallable ):
@@ -38,8 +42,10 @@ class BenchImpl( Bench_Interface ):
         super().__init__()
 
         self.artefact = dict()
-        self.ValueList = list()
+        self.ValueList = [0]
         self.Range = RangeForward
+        self.BenchName = type(self).__name__
+        self.art_type = 'Before:'
 
     def TimeLog( self, inName, inCallable ):
         Time = time()
@@ -47,12 +53,16 @@ class BenchImpl( Bench_Interface ):
         Time = time() - Time
         self.AddArtefact( inName, Time )
 
-    def Run( self ):
-        if(not self.ValueList):
-            self.ValueList.append(0)
+    def AddSystemArtefacts(self):
+        self.AddArtefact( 'BenchName', self.BenchName )
+        self.AddArtefact( 'RangeType', self.Range.__name__ )
 
+    def Run( self ):
         for val in self.ValueList:
             self.ScalableValue = val
+
+            self.art_type = 'System:'
+            self.AddSystemArtefacts()
 
             self.art_type = 'Before:'
             self.TimeLog( 'SetUp', self.SetUp )
@@ -64,6 +74,7 @@ class BenchImpl( Bench_Interface ):
             self.TimeLog( 'TearDown', self.TearDown )
 
             self.PrintArtefacts()
+            self.artefact.clear()
             print()
     
     def AddArtefact( self, inName, inValue ):
@@ -72,7 +83,13 @@ class BenchImpl( Bench_Interface ):
     def PrintArtefacts( self ):
         artefacts = [ (key, self.artefact[key]) for key in self.artefact ]
         for key, val in artefacts:
-            print( 'Artefact:', key.ljust(20), val )
+            if( isinstance(val, float) ):
+                print( 'Artefact:', key.ljust(20), "{:.3f}".format(round(val,3)) )
+            else:
+                print( 'Artefact:', key.ljust(20), val )
+
+    def put_BenchName( self, inBenchName ):
+        self.BenchName = inBenchName
 
     def put_Scalable( self, inValueList ):
         self.ValueList = inValueList
