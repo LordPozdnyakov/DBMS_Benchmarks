@@ -17,6 +17,7 @@ class Bench_Valentina_KV_CRUD( BenchServer_Valentina ):
     def SetUp(self):
         self.AddArtefact('Keys Count', self.ScalableValue)
 
+        self.cursor.execute(self.cmd_DropTable)
         self.cursor.execute(self.cmd_CreateTable)
 
     def TearDown(self):
@@ -50,7 +51,8 @@ class Bench_Valentina_KV_CRUD( BenchServer_Valentina ):
         return "key_" + str(i)
 
 Bench_Valentina_KV_CRUD.cmd_CreateTable = 'CREATE KEYVALUE KV1;'
-Bench_Valentina_KV_CRUD.cmd_DropTable = 'DROP KEYVALUE KV1;'
+Bench_Valentina_KV_CRUD.cmd_DropTable = 'DROP KEYVALUE IF EXISTS KV1;'
+
 Bench_Valentina_KV_CRUD.cmd_Insert = 'KEYVALUE KV1 INSERT(:1 : :2);'
 Bench_Valentina_KV_CRUD.cmd_Get = 'KEYVALUE KV1 GET(:1);'
 Bench_Valentina_KV_CRUD.cmd_Update = 'KEYVALUE KV1 UPDATE(:1 : :2);'
@@ -63,6 +65,7 @@ def main():
     ##########
     # Valentina bench
     VS_Server_Addr = 'sa:sa@127.0.0.1/vdb_test_db'
+    # VS_Server_Addr = '/home/lord/bench/Bench_VS_Insert.vdb'
     # VS_Server_Axe = [10, 100, 1000, 10000, 100000]
     VS_Server_Axe = [10000]
     VS_bench_KV = Bench_Valentina_KV_CRUD(VS_Server_Addr)
@@ -74,11 +77,11 @@ def main():
     
     # Backward
     VS_bench_KV.put_Range(RangeBackward)
-    VS_bench_KV.Run()
+    # VS_bench_KV.Run()
     
     # Random
     VS_bench_KV.put_Range(RangeRandom)
-    VS_bench_KV.Run()
+    # VS_bench_KV.Run()
 
 
 # **********************************************************************************************
