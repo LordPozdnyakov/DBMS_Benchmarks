@@ -5,7 +5,7 @@
 # BOX-Modules
 
 # SEREVER-Modules
-from BenchServerImpl import BenchServer_Valentina
+from BenchServerImpl_Valentina import BenchServer_Valentina
 from BenchRange import RangeForward, RangeBackward, RangeRandom
 
 

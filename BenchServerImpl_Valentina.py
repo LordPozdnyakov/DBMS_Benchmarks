@@ -5,25 +5,25 @@
 # BOX-Modules
 
 # BENCH-Modules
-from BenchImpl import BenchImpl
+from BenchServerImpl import BenchServerImpl
+
+# SEREVER-Modules
+import valentina
 
 
 # **********************************************************************************************
-class BenchServerImpl( BenchImpl ):
-    def __init__(self):
+class BenchServer_Valentina( BenchServerImpl ):
+    def __init__(self, inServerAddres):
         super().__init__()
-    
+        self.ServerAddr = inServerAddres
+
     def EngineInit(self):
-        pass
+        self.connection = valentina.connect(self.ServerAddr)
+        self.cursor = self.connection.cursor()
+
     def EngineShutdown( self ):
-        pass
-
-    def Run( self ):
-        self.EngineInit()
-
-        BenchImpl.Run(self)
-
-        self.EngineShutdown()
+        self.cursor.close()
+        self.connection.close()
 
 
 # **********************************************************************************************

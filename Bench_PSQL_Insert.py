@@ -5,7 +5,7 @@
 # BOX-Modules
 
 # SEREVER-Modules
-from BenchServerImpl import BenchServer_PostgreSql
+from BenchServerImpl_Postgresql import BenchServer_PostgreSql
 from BenchRange import RangeForward, RangeBackward, RangeRandom
 
 
@@ -75,7 +75,7 @@ def main():
     # PostgreSql bench
     PS_Server_Addr = 'pq://postgres:pass_post@localhost:5432/psql_test_db'
     # PS_Server_Axe = [10, 100, 1000, 10000, 100000]
-    PS_Server_Axe = [100000]
+    PS_Server_Axe = [1000]
     PS_bench = Bench_Psql_Example(PS_Server_Addr)
     PS_bench.put_Scalable( PS_Server_Axe )
 

@@ -5,7 +5,7 @@
 # BOX-Modules
 
 # SEREVER-Modules
-from BenchServerImpl import BenchServer_Valentina
+from BenchServerImpl_Valentina import BenchServer_Valentina
 from BenchRange import RangeForward, RangeBackward, RangeRandom
 
 
@@ -61,7 +61,7 @@ def main():
     VS_Server_Addr = 'sa:sa@127.0.0.1/vdb_test_db'
     # VS_Server_Addr = '/home/lord/bench/Bench_VS_Insert.vdb'
     # VS_Server_Axe = [1000, 10000, 100000]
-    VS_Server_Axe = [100000]
+    VS_Server_Axe = [10000]
     VS_Bench = Bench_Valentina_Record_CRUD(VS_Server_Addr)
     VS_Bench.put_BenchName('VS_Record_CRUD') # optional
     VS_Bench.put_Scalable( VS_Server_Axe )

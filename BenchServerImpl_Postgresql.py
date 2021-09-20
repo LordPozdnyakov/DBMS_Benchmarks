@@ -5,25 +5,23 @@
 # BOX-Modules
 
 # BENCH-Modules
-from BenchImpl import BenchImpl
+from BenchServerImpl import BenchServerImpl
+
+# SEREVER-Modules
+import postgresql
 
 
 # **********************************************************************************************
-class BenchServerImpl( BenchImpl ):
-    def __init__(self):
+class BenchServer_PostgreSql( BenchServerImpl ):
+    def __init__(self, inServerAddres):
         super().__init__()
-    
+        self.ServerAddr = inServerAddres
+
     def EngineInit(self):
-        pass
+        self.db = postgresql.open(self.ServerAddr)
+
     def EngineShutdown( self ):
         pass
-
-    def Run( self ):
-        self.EngineInit()
-
-        BenchImpl.Run(self)
-
-        self.EngineShutdown()
 
 
 # **********************************************************************************************

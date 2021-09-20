@@ -5,9 +5,9 @@
 # BOX-Modules
 
 # BENCH-Modules
-from BenchServerImpl import BenchServer_Valentina
-from BenchServerImpl import BenchServer_PostgreSql
-from BenchServerImpl import BenchServer_Redis
+from BenchServerImpl_Valentina import BenchServer_Valentina
+from BenchServerImpl_Postgresql import BenchServer_PostgreSql
+from BenchServerImpl_Redis import BenchServer_Redis
 
 
 # **********************************************************************************************

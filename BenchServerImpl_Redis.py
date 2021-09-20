@@ -5,25 +5,24 @@
 # BOX-Modules
 
 # BENCH-Modules
-from BenchImpl import BenchImpl
+from BenchServerImpl import BenchServerImpl
+
+# SEREVER-Modules
+from redis import Redis
 
 
 # **********************************************************************************************
-class BenchServerImpl( BenchImpl ):
-    def __init__(self):
+class BenchServer_Redis( BenchServerImpl ):
+    def __init__(self, inServerAddres):
         super().__init__()
+        self.ServerAddr = inServerAddres
     
     def EngineInit(self):
-        pass
+        adr = self.ServerAddr.split(':')
+        self.db = Redis(adr[0], adr[1], adr[2])
+
     def EngineShutdown( self ):
-        pass
-
-    def Run( self ):
-        self.EngineInit()
-
-        BenchImpl.Run(self)
-
-        self.EngineShutdown()
+        self.db.close()
 
 
 # **********************************************************************************************
