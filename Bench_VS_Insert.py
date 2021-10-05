@@ -20,24 +20,29 @@ class Bench_Valentina_Record_CRUD( BenchServer_Valentina ):
         self.cursor.execute(self.cmd_DropTable)
         self.cursor.execute(self.cmd_CreateTable)
 
+        self.insert_stmt = self.cursor.prepare(self.cmd_Insert) 
+        self.update_stmt = self.cursor.prepare(self.cmd_Update) 
+        self.select_stmt = self.cursor.prepare(self.cmd_Select) 
+        self.delete_stmt = self.cursor.prepare(self.cmd_Delete) 
+
     def TearDown(self):
         self.cursor.execute(self.cmd_DropTable)
 
     def InsertRecords(self):
         for i in self.Range(0, self.ScalableValue):
-            self.cursor.execute( self.cmd_Insert, [i, i] )
+            self.insert_stmt( i, i )
 
     def UpdateRecords(self):
         for i in self.Range(0, self.ScalableValue):
-            self.cursor.execute( self.cmd_Update, [i+i, i] )
+            self.update_stmt( i+i, i )
 
-    def DeleteRecords(self):
-        for i in self.Range(0, self.ScalableValue):
-            self.cursor.execute( self.cmd_Delete, [i] )
-    
     def SelectRecords(self):
         for i in self.Range(0, self.ScalableValue):
-            self.cursor.execute( self.cmd_Select, [i] )
+            self.select_stmt( i )
+    
+    def DeleteRecords(self):
+        for i in self.Range(0, self.ScalableValue):
+            self.delete_stmt( i )
 
     def BenchBody(self):
         self.TimeLog( 'Insert', self.InsertRecords )
