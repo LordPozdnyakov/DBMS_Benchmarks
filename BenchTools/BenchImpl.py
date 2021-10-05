@@ -6,7 +6,7 @@
 from time import time
 
 #BOX-Modules
-from BenchRange import RangeForward
+from BenchTools.BenchRange import RangeForward
 
 
 # **********************************************************************************************

@@ -5,7 +5,7 @@
 # BOX-Modules
 
 # SEREVER-Modules
-from BenchImpl_ValentinaServer import Bench_ValentinaServer
+from BenchTools.BenchImpl_ValentinaServer import Bench_ValentinaServer
 
 import valentina
 
@@ -86,7 +86,7 @@ def main():
     # VS_Addr = '/home/lord/bench/Bench_VS_Insert.vdb'
     VS_Addr = 'sa:sa@127.0.0.1/vdb_test_db'
     # VS_Bench_Axe = [1000, 10000, 100000]
-    VS_Bench_Axe = [100000]
+    VS_Bench_Axe = [10000]
     
     ##########
     # Stmt NOT USED

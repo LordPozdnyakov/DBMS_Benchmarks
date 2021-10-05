@@ -5,7 +5,7 @@
 # BOX-Modules
 
 # BENCH-Modules
-from BenchImpl import BenchImpl
+from BenchTools.BenchImpl import BenchImpl
 
 # SEREVER-Modules
 import postgresql

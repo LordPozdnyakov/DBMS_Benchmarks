@@ -6,12 +6,12 @@
 from random import randint
 
 # BENCH-Modules
-from BenchImpl import BenchImpl
+from BenchTools.BenchImpl import BenchImpl
 
 # SEREVER-Modules
-from BenchImpl_ValentinaServer import Bench_ValentinaServer
-from BenchImpl_PostgreSql import Bench_PostgreSql
-from BenchImpl_Redis import Bench_Redis
+from BenchTools.BenchImpl_ValentinaServer import Bench_ValentinaServer
+from BenchTools.BenchImpl_PostgreSql import Bench_PostgreSql
+from BenchTools.BenchImpl_Redis import Bench_Redis
 
 
 # **********************************************************************************************
@@ -155,7 +155,7 @@ Bench_Valentina_KV_Example.cmd_Delete = 'KEYVALUE KV1 GET(:1);'
 def main():
     ##########
     # Simple bench
-    bench_axe = [1000, 10000, 100000]
+    bench_axe = [1000]
     bench = Bench_Example()
     bench.put_Scalable( bench_axe )
     bench.Run()
@@ -163,35 +163,34 @@ def main():
     ##########
     # Valentina bench
     VS_Server_Addr = 'sa:sa@127.0.0.1/vdb_test_db'
-    VS_Server_Axe = [10, 100, 1000, 10000, 100000]
+    VS_Server_Axe = [1000]
     VS_bench = Bench_Valentina_Example(VS_Server_Addr)
     VS_bench.put_Scalable( VS_Server_Axe )
-    # VS_bench.Run()
+    VS_bench.Run()
 
     ##########
     # PostgreSql bench
     PS_Server_Addr = 'pq://postgres:pass_post@localhost:5432/psql_test_db'
-    PS_Server_Axe = [10, 100, 1000, 10000, 100000]
+    PS_Server_Axe = [1000]
     PS_bench = Bench_Psql_Example(PS_Server_Addr)
     PS_bench.put_Scalable( PS_Server_Axe )
-    # PS_bench.Run()
+    PS_bench.Run()
 
     ##########
     # Redis bench
     Redis_Server_Addr = 'localhost:6379:0'
-    Redis_Server_Axe = [10, 100, 1000, 10000, 100000]
+    Redis_Server_Axe = [1000]
     Redis_bench = Bench_Redis_Example(Redis_Server_Addr)
     Redis_bench.put_Scalable( Redis_Server_Axe )
-    # Redis_bench.Run()
+    Redis_bench.Run()
 
     ##########
     # Valentina bench
     VS_Server_Addr = 'sa:sa@127.0.0.1/vdb_test_db'
-    VS_Server_Axe = [10, 100, 1000, 10000, 100000]
-    # VS_Server_Axe = [10, 100, 1000, 10000]
+    VS_Server_Axe = [1000]
     VS_bench = Bench_Valentina_KV_Example(VS_Server_Addr)
     VS_bench.put_Scalable( VS_Server_Axe )
-    # VS_bench.Run()
+    VS_bench.Run()
 
 
 # **********************************************************************************************

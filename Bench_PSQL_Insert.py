@@ -5,8 +5,8 @@
 # BOX-Modules
 
 # SEREVER-Modules
-from BenchImpl_PostgreSql import Bench_PostgreSql
-from BenchRange import RangeForward, RangeBackward, RangeRandom
+from BenchTools.BenchImpl_PostgreSql import Bench_PostgreSql
+from BenchTools.BenchRange import RangeForward, RangeBackward, RangeRandom
 
 
 # **********************************************************************************************

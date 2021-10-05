@@ -5,8 +5,8 @@
 # BOX-Modules
 
 # SERVER-Modules
-from BenchImpl_Redis import Bench_Redis
-from BenchRange import RangeForward, RangeBackward, RangeRandom
+from BenchTools.BenchImpl_Redis import Bench_Redis
+from BenchTools.BenchRange import RangeForward, RangeBackward, RangeRandom
 
 
 # **********************************************************************************************
