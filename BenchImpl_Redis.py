@@ -5,25 +5,24 @@
 # BOX-Modules
 
 # BENCH-Modules
-from BenchServerImpl import BenchServerImpl
+from BenchImpl import BenchImpl
 
 # SEREVER-Modules
-import valentina
+from redis import Redis
 
 
 # **********************************************************************************************
-class BenchServer_Valentina( BenchServerImpl ):
+class Bench_Redis( BenchImpl ):
     def __init__(self, inServerAddres):
         super().__init__()
         self.ServerAddr = inServerAddres
-
+    
     def EngineInit(self):
-        self.connection = valentina.connect(self.ServerAddr)
-        self.cursor = self.connection.cursor()
+        adr = self.ServerAddr.split(':')
+        self.db = Redis(adr[0], adr[1], adr[2])
 
     def EngineShutdown( self ):
-        self.cursor.close()
-        self.connection.close()
+        self.db.close()
 
 
 # **********************************************************************************************

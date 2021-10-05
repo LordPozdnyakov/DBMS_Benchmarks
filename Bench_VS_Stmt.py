@@ -5,13 +5,13 @@
 # BOX-Modules
 
 # SEREVER-Modules
-from BenchServerImpl_Valentina import BenchServer_Valentina
+from BenchImpl_ValentinaServer import Bench_ValentinaServer
 
 import valentina
 
 
 # **********************************************************************************************
-class Bench_ValentinaLocal_No_Stmt( BenchServer_Valentina ):
+class Bench_ValentinaLocal_No_Stmt( Bench_ValentinaServer ):
     def __init__(self, inServerAddres):
         super().__init__(inServerAddres)
 

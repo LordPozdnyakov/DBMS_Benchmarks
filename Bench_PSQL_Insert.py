@@ -5,12 +5,12 @@
 # BOX-Modules
 
 # SEREVER-Modules
-from BenchServerImpl_Postgresql import BenchServer_PostgreSql
+from BenchImpl_PostgreSql import Bench_PostgreSql
 from BenchRange import RangeForward, RangeBackward, RangeRandom
 
 
 # **********************************************************************************************
-class Bench_Psql_Example( BenchServer_PostgreSql ):
+class Bench_Psql_Example( Bench_PostgreSql ):
     def __init__(self, inServerAddres):
         super().__init__(inServerAddres)
 

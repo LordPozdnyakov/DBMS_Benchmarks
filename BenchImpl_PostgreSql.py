@@ -5,14 +5,14 @@
 # BOX-Modules
 
 # BENCH-Modules
-from BenchServerImpl import BenchServerImpl
+from BenchImpl import BenchImpl
 
 # SEREVER-Modules
 import postgresql
 
 
 # **********************************************************************************************
-class BenchServer_PostgreSql( BenchServerImpl ):
+class Bench_PostgreSql( BenchImpl ):
     def __init__(self, inServerAddres):
         super().__init__()
         self.ServerAddr = inServerAddres

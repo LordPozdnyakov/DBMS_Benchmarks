@@ -20,6 +20,11 @@ class Bench_Interface:
     def BenchBody( self ):
         pass
 
+    def EngineInit(self):
+        pass
+    def EngineShutdown( self ):
+        pass
+
     def AddSystemArtefacts(self):
         pass
     def AddArtefact( self, inName, inValue ):
@@ -65,6 +70,8 @@ class BenchImpl( Bench_Interface ):
             self.AddSystemArtefacts()
 
             self.art_type = 'Before:'
+            
+            self.EngineInit()
             self.TimeLog( 'SetUp', self.SetUp )
 
             self.art_type = 'Inner:'
@@ -72,6 +79,7 @@ class BenchImpl( Bench_Interface ):
 
             self.art_type = 'After:'
             self.TimeLog( 'TearDown', self.TearDown )
+            self.EngineShutdown()
 
             self.PrintArtefacts()
             self.artefact.clear()

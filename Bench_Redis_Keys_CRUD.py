@@ -5,12 +5,12 @@
 # BOX-Modules
 
 # SERVER-Modules
-from BenchServerImpl_Redis import BenchServer_Redis
+from BenchImpl_Redis import Bench_Redis
 from BenchRange import RangeForward, RangeBackward, RangeRandom
 
 
 # **********************************************************************************************
-class Bench_Redis_Keys_CRUD( BenchServer_Redis ):
+class Bench_Redis_Keys_CRUD( Bench_Redis ):
     def __init__(self, inServerAddres):
         super().__init__(inServerAddres)
     
