@@ -75,7 +75,7 @@ def main():
     # Valentina bench
     # VS_Server_Addr = 'sa:sa@127.0.0.1/vdb_test_db'
     VS_Server_Addr = '/home/lord/bench/Bench_VS_Insert.vdb'
-    # VS_Server_Axe = [10, 100, 1000, 10000, 100000]
+    # VS_Server_Axe = [1000, 10000, 100000]
     VS_Server_Axe = [10000]
     VS_bench_KV = Bench_Valentina_KV_CRUD(VS_Server_Addr)
     VS_bench_KV.put_Scalable( VS_Server_Axe )

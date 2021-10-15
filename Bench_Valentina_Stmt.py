@@ -73,7 +73,7 @@ def main():
     ##########
     # Prepare params
     DB_Name = 'Bench_Stmt'
-    # DB_Name = '/home/lord/bench/Bench_VS_Insert'
+    # DB_Name = '/home/lord/bench/Bench_VS_Insert.vdb'
     # DB_Name = 'sa:sa@127.0.0.1/vdb_test_db'
 
     # VS_Bench_Axe = [10000, 100000, 1000000]

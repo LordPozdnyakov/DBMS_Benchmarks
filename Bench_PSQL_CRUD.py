@@ -10,7 +10,7 @@ from BenchTools.BenchRange import RangeForward, RangeBackward, RangeRandom
 
 
 # **********************************************************************************************
-class Bench_Psql_Example( Bench_PostgreSql ):
+class Bench_Psql_CRUD( Bench_PostgreSql ):
     def __init__(self, inServerAddres):
         super().__init__(inServerAddres)
 
@@ -58,15 +58,15 @@ class Bench_Psql_Example( Bench_PostgreSql ):
         self.TimeLog( 'Update', self.UpdateRecords )
         self.TimeLog( 'Drop', self.DropRecords )
 
-Bench_Psql_Example.cmd_CreateTable = 'CREATE TABLE T1( fld_val INTEGER, fld_key INTEGER);'
-Bench_Psql_Example.cmd_CreateIndex = 'CREATE INDEX T1_index1 ON T1 (fld_key);'
+Bench_Psql_CRUD.cmd_CreateTable = 'CREATE TABLE T1( fld_val INTEGER, fld_key INTEGER);'
+Bench_Psql_CRUD.cmd_CreateIndex = 'CREATE INDEX T1_index1 ON T1 (fld_key);'
 
-Bench_Psql_Example.cmd_DropTable = 'DROP TABLE T1;'
+Bench_Psql_CRUD.cmd_DropTable = 'DROP TABLE T1;'
 
-Bench_Psql_Example.cmd_Insert = 'INSERT INTO T1 VALUES ($1, $2);'
-Bench_Psql_Example.cmd_Update = 'UPDATE T1 SET fld_val = $1 WHERE fld_key = $2 ;'
-Bench_Psql_Example.cmd_Delete = 'DELETE FROM T1 WHERE fld_key = $1 ;'
-Bench_Psql_Example.cmd_Select = 'SELECT fld_val FROM T1 WHERE fld_key = $1 ;'
+Bench_Psql_CRUD.cmd_Insert = 'INSERT INTO T1 VALUES ($1, $2);'
+Bench_Psql_CRUD.cmd_Update = 'UPDATE T1 SET fld_val = $1 WHERE fld_key = $2 ;'
+Bench_Psql_CRUD.cmd_Delete = 'DELETE FROM T1 WHERE fld_key = $1 ;'
+Bench_Psql_CRUD.cmd_Select = 'SELECT fld_val FROM T1 WHERE fld_key = $1 ;'
 
 
 # **********************************************************************************************
@@ -74,9 +74,9 @@ def main():
     ##########
     # PostgreSql bench
     PS_Server_Addr = 'pq://postgres:pass_post@localhost:5432/psql_test_db'
-    # PS_Server_Axe = [10, 100, 1000, 10000, 100000]
+    # PS_Server_Axe = [1000, 10000, 100000]
     PS_Server_Axe = [1000]
-    PS_bench = Bench_Psql_Example(PS_Server_Addr)
+    PS_bench = Bench_Psql_CRUD(PS_Server_Addr)
     PS_bench.put_Scalable( PS_Server_Axe )
 
     # Forward

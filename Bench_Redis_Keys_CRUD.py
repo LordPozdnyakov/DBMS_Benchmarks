@@ -61,7 +61,7 @@ def main():
     ##########
     # Redis bench
     Redis_Server_Addr = 'localhost:6379:0'
-    # Redis_Server_Axe = [10, 100, 1000, 10000, 100000]
+    # Redis_Server_Axe = [1000, 10000, 100000]
     Redis_Server_Axe = [10000]
     Redis_bench = Bench_Redis_Keys_CRUD(Redis_Server_Addr)
     Redis_bench.put_Scalable( Redis_Server_Axe )
