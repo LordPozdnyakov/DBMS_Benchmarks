@@ -5,20 +5,13 @@
 # BOX-Modules
 
 # SEREVER-Modules
-from BenchTools.BenchImpl_ValentinaServer import Bench_ValentinaServer
-
-import valentina
+from BenchTools.BenchImpl_Valentina import Bench_ValentinaCreate
 
 
 # **********************************************************************************************
-class Bench_ValentinaLocal_No_Stmt( Bench_ValentinaServer ):
-    def __init__(self, inServerAddres):
-        super().__init__(inServerAddres)
-
-    def EngineInit(self):
-        # self.connection = valentina.create(self.ServerAddr)
-        self.connection = valentina.connect(self.ServerAddr)
-        self.cursor = self.connection.cursor()
+class Bench_ValentinaLocal_No_Stmt( Bench_ValentinaCreate ):
+    def __init__(self, inDbName ):
+        super().__init__(inDbName, True)
     
     def SetUp(self):
         self.AddArtefact('Record Count', self.ScalableValue)
@@ -28,7 +21,6 @@ class Bench_ValentinaLocal_No_Stmt( Bench_ValentinaServer ):
 
     def TearDown(self):
         self.cursor.execute(self.cmd_DropTable)
-        # pass
 
     def InsertRecords(self):
         for i in self.Range(0, self.ScalableValue):
@@ -37,8 +29,6 @@ class Bench_ValentinaLocal_No_Stmt( Bench_ValentinaServer ):
     def BenchBody(self):
         self.TimeLog( 'Insert', self.InsertRecords )
 
-# Bench_ValentinaLocal_No_Stmt.cmd_CreateTable = 'CREATE TABLE T2( fld_val LONG, fld_key LONG INDEXED);'
-Bench_ValentinaLocal_No_Stmt.cmd_DropTable = 'DROP TABLE IF EXISTS T2;'
 Bench_ValentinaLocal_No_Stmt.cmd_CreateTable = """
 CREATE TABLE T2(
     fld_1 LONG,
@@ -52,7 +42,7 @@ CREATE TABLE T2(
     fld_9 LONG,
     fld_10 LONG
 );"""
-
+Bench_ValentinaLocal_No_Stmt.cmd_DropTable = 'DROP TABLE IF EXISTS T2;'
 
 Bench_ValentinaLocal_No_Stmt.cmd_Insert = """
 INSERT INTO T2 VALUES (
@@ -62,8 +52,8 @@ INSERT INTO T2 VALUES (
 
 # **********************************************************************************************
 class Bench_ValentinaLocal_With_Stmt( Bench_ValentinaLocal_No_Stmt ):
-    def __init__(self, inServerAddres):
-        super().__init__(inServerAddres)
+    def __init__(self, inDbName ):
+        super().__init__(inDbName)
     
     def SetUp(self):
         self.AddArtefact('Record Count', self.ScalableValue)
@@ -82,21 +72,22 @@ def main():
     
     ##########
     # Prepare params
-    # VS_Addr = 'test.vdb?ram=true'
-    # VS_Addr = '/home/lord/bench/Bench_VS_Insert.vdb'
-    VS_Addr = 'sa:sa@127.0.0.1/vdb_test_db'
-    # VS_Bench_Axe = [1000, 10000, 100000]
-    VS_Bench_Axe = [10000]
+    DB_Name = 'Bench_Stmt'
+    # DB_Name = '/home/lord/bench/Bench_VS_Insert'
+    # DB_Name = 'sa:sa@127.0.0.1/vdb_test_db'
+
+    # VS_Bench_Axe = [10000, 100000, 1000000]
+    VS_Bench_Axe = [100000]
     
     ##########
     # Stmt NOT USED
-    Bench_No_Stmt = Bench_ValentinaLocal_No_Stmt(VS_Addr)
+    Bench_No_Stmt = Bench_ValentinaLocal_No_Stmt(DB_Name )
     Bench_No_Stmt.put_Scalable( VS_Bench_Axe )
     Bench_No_Stmt.Run()
     
     ##########
     # Stmt USED
-    Bench_Use_Stmt = Bench_ValentinaLocal_With_Stmt(VS_Addr)
+    Bench_Use_Stmt = Bench_ValentinaLocal_With_Stmt(DB_Name )
     Bench_Use_Stmt.put_Scalable( VS_Bench_Axe )
     Bench_Use_Stmt.Run()
 

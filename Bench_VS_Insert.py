@@ -5,12 +5,12 @@
 # BOX-Modules
 
 # SEREVER-Modules
-from BenchTools.BenchImpl_ValentinaServer import Bench_ValentinaServer
+from BenchTools.BenchImpl_Valentina import Bench_Valentina
 from BenchTools.BenchRange import RangeForward, RangeBackward, RangeRandom
 
 
 # **********************************************************************************************
-class Bench_Valentina_Record_CRUD( Bench_ValentinaServer ):
+class Bench_Valentina_Record_CRUD( Bench_Valentina ):
     def __init__(self, inServerAddres):
         super().__init__(inServerAddres)
     

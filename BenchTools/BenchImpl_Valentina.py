@@ -12,7 +12,7 @@ import valentina
 
 
 # **********************************************************************************************
-class Bench_ValentinaServer( BenchImpl ):
+class Bench_Valentina( BenchImpl ):
     def __init__(self, inServerAddres):
         super().__init__()
         self.ServerAddr = inServerAddres
@@ -22,6 +22,29 @@ class Bench_ValentinaServer( BenchImpl ):
         self.cursor = self.connection.cursor()
 
     def EngineShutdown( self ):
+        self.cursor.close()
+        self.connection.close()
+
+
+# **********************************************************************************************
+class Bench_ValentinaCreate( BenchImpl ):
+    def __init__(self, inDbAddres, inIsRam=False, inIsRemoveAfter=False):
+        super().__init__()
+
+        self.DbAddres = inDbAddres + '?ram=' + str(inIsRam).lower()
+        self.DbName = inDbAddres.split('/')[-1]
+
+        self.isRam = inIsRam
+        self.isRemoveAfter = inIsRemoveAfter
+
+    def EngineInit(self):
+        self.connection = valentina.create(self.DbAddres)
+        self.cursor = self.connection.cursor()
+    
+    def EngineShutdown( self ):
+        if(self.isRemoveAfter):
+            self.cursor.execute('DROP DATABASE IF EXISTS ' + self.DbName )
+
         self.cursor.close()
         self.connection.close()
 
